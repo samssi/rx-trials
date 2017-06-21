@@ -7,7 +7,7 @@ class Input extends React.Component {
     }
 
     handleChange(event) {
-        streamStore.stream().next(event.target.value);
+        streamStore.subjectStream().next(event.target.value);
     }
 
     render() {

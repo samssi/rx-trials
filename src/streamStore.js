@@ -1,9 +1,18 @@
 import Rx from "rxjs";
+const socket = require('socket.io-client')('http://localhost:8001');
 
-const streamStore = new Rx.Subject();
+const subject = new Rx.Subject();
 
-function stream() {
-    return streamStore;
+function subjectStream() {
+    return subject;
 }
 
-module.exports = { stream };
+function websocketStream(eventName) {
+    return Rx.Observable.create(observer => {
+        socket.on(eventName, (data) => {
+            observer.next(data.message)
+        });
+    });
+}
+
+module.exports = { subjectStream, websocketStream };

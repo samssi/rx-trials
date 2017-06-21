@@ -10,9 +10,8 @@ class Output extends React.Component {
     }
 
     componentDidMount() {
-        streamStore.stream().subscribe((value) => {
-            setTimeout(() => this.setState({ text: value }), 2000);
-        });
+        streamStore.subjectStream().subscribe((value) => { setTimeout(() => this.setState({ text: value }), 2000); });
+        streamStore.websocketStream("message").subscribe((value) => {this.setState({ text: value })});
     }
 
     render() {
